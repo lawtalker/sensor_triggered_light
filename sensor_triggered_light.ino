@@ -74,8 +74,8 @@
 // light timeout in seconds
 #define lightInterval 90
 
-// minimum distance in feet to trigger light for ultrasonic proximity sensor
-#define pingFeet 2
+// minimum distance (inches) to trigger light for ultrasonic proximity sensor
+#define pingInches 24
 
 void setup() {
   pinMode(ledPin, OUTPUT);
@@ -234,7 +234,7 @@ void loop() {
     case 2:
       if (! digitalRead(echoPin)) {
         pingState = 0;
-        if ((micros() - echoTime) < (2L * 888 * pingFeet)) {
+        if ((micros() - echoTime) < (2L * 74 * pingInches)) {
           pongState = HIGH;
         }
         else {
