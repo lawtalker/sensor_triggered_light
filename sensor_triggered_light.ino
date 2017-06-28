@@ -163,24 +163,22 @@ void loop() {
 
       The ultrasonic range finder uses two pins. The trigger pin is raised
       HIGH for 10 microseconds to send a ping, at which point the sensor will
-      send eight 40 kHz pulses. Once a ping has been sent, if a body is
-      detected the echo pin will be raised HIGH for a period of time equal to
-      the period of time it took for the ping to be reflected back to the
-      sensor.
-
+      send eight 40 kHz pulses. Once a ping has been sent, the echo pin
+      is held HIGH until a reflection of the ping is detected, at which point
+      echo will return to LOW. If no reflection is detected after 38 
+      milliseconds, echo will return to low.
+      
       Sound takes approximately 888 microseconds to travel 1 foot, and thus
       if the echo pin is raised high for 888 * 2 microseconds, that indicates
       the object is 1 foot away (i.e. the ping took 888 microseconds to
       reach the object, and then 888 microseconds to return as an echo).
 
-      If no reflection is detected after 38 milliseconds, the echo pin will
-      be held HIGH for 38 milliseconds. This theoretically means that there
-      is no substantial body within about 20 feet of the sensor, but the
-      sensor actually tops out at about 13 feet (i.e. an obstruction at 13+
-      feet will result in a 38 ms echo pulse).
+      The sensor's maximum range is about 13 feet. At that point, one would
+      expect echo to be held HIGH for about 23 milliseconds. So the 38
+      millisecond timeout is well beyond that range.
 
       If there is no obstruction within the sensor's range, this entire cycle
-      will take just over 76 milliseconds. In my application, there is a wall
+      will take less than 40 milliseconds. In my application, there is a wall
       that is less than 4 feet from the sensor, which means that the cycle
       should take less than 8 milliseconds when there is no closer
       obstruction than the wall.
